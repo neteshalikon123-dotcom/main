@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adilzhan & Dinara - Үйлену тойына шақыру</title>
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Times+New+Roman&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --font-accent: 'Alex Brush', cursive;
+            --font-main: 'Times New Roman', serif;
+            --color-dark: #333;
+            --color-gold: #bda070;
+            --color-light: #fefdf9; /* Сүт түстес ақ */
+            --color-bg: #fcfaf6;   /* Жұмсақ, сүт түстес фон */
+        }
+
+        body {
+            font-family: var(--font-main);
+            font-size: 18px; 
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            color: var(--color-dark);
+            background-color: rgb(233, 235, 219);
+            text-align: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Бүйірдегі ою-өрнектер */
+        .side-ornament {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 50px; /* Оюдың ені */
+            background-image: url('https://ru.freepik.com/free-photos-vectors/%D0%BA%D0%B0%D0%B7%D0%B0%D1%85%D1%81%D0%BA%D0%B8%D0%B9-%D0%BE%D1%80%D0%BD%D0%B0%D0%BC%D0%B5%D0%BD%D1%82-png'); /* Ою суреті */
+            background-repeat: repeat-y; /* Тігінен қайталанады */
+            background-size: 80%; /* Оюдың өлшемі */
+            background-position: center; /* Ортасынан орналасады */
+            opacity: 0.15; /* Мөлдірлігі */
+            z-index: 1; /* Басқа элементтердің астында */
+        }
+        .side-ornament-left { left: 0; }
+        .side-ornament-right { right: 0; }
+
+        .ornament {
+            width: 100px;
+            height: 20px;
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Kazakh_ornament_koshkar_muiz.svg/200px-Kazakh_ornament_koshkar_muiz.svg.png');
+            background-repeat: repeat-x;
+            background-size: contain;
+            opacity: 0.3;
+            margin: 20px auto;
+        }
+
+        /* 1. Басты экран */
+        .hero {
+            height: 100vh;
+            background: url('https://people.com/thmb/kuXUPb4yLtfTEbkDcxzykZKXvTs=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc():focal(742x126:744x128)/Bride-and-Groom-2-040124-b04ce584b7504c7096de5fefce67f445.jpg') no-repeat center center/cover;
+            color: rgb(200, 200, 200);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end; 
+            align-items: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            position: relative;
+            z-index: 2;
+            padding-bottom: 5vh; 
+        }
+        .hero h1 {
+            font-family: var(--font-accent);
+            font-size: 6rem;
+            margin: 0;
+            font-weight: normal;
+        }
+        .hero h2 {
+            font-family: var(--font-main);
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+
+        .section {
+            padding: 60px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative; 
+            z-index: 2;
+            background-color: var(--color-bg);
+        }
+        .section.bg-white {
+            background-color: var(--color-light); /* Жұмсақ фон енді */
+        }
+
+        .section h3 {
+            font-family: var(--font-main);
+            font-size: 2.5rem;
+            color: var(--color-gold);
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .section p {
+            font-size: 1.2rem;
+            line-height: 1.7;
+        }
+        
+        .invitation h3 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--color-dark);
+        }
+
+        /* 3. Таймер */
+        #countdown {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        #countdown div {
+            background: var(--color-light);
+            border: 1px solid #eee;
+            border-radius: 10px;
+            padding: 20px;
+            min-width: 80px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        #countdown div span {
+            display: block;
+            font-family: var(--font-accent);
+            font-size: 3rem;
+            color: var(--color-gold);
+            font-weight: normal;
+        }
+        #countdown div p {
+            font-family: var(--font-main);
+            font-size: 1rem;
+            margin: 5px 0 0 0;
+            color: #777;
+        }
+
+        /* 4. Мәлімет */
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            text-align: left;
+            margin-top: 30px;
+        }
+        .details-grid > div {
+            background: var(--color-light);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        .details-grid h4 {
+            font-family: var(--font-main);
+            color: var(--color-gold);
+            font-size: 1.5rem;
+            border-bottom: 2px solid var(--color-gold);
+            padding-bottom: 5px;
+        }
+        .calendar {
+            padding: 10px;
+            background: #fafafa;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        .calendar-header {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+        .calendar-grid span { padding: 5px; }
+        .calendar-grid span.highlight {
+            background-color: var(--color-gold);
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+        }
+        .map-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 25px;
+            background-color: var(--color-gold);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+        .map-button:hover {
+            background-color: #a48a60;
+        }
+
+        /* * Кері байланыс формасының стилі */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-top: 30px;
+            text-align: left;
+        }
+        .form-input, .form-select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: var(--font-main);
+            font-size: 1.1rem;
+            box-sizing: border-box; 
+        }
+        .form-field {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+        .form-field label {
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+        }
+        .radio-group label {
+            font-weight: normal;
+        }
+        .full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .submit-button {
+            background-color: var(--color-gold);
+            color: white;
+            padding: 15px;
+            font-family: var(--font-main);
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+        .submit-button:disabled {
+            background-color: #cccccc;
+            color: #888;
+            cursor: not-allowed;
+        }
+        .submit-button:hover:not(:disabled) {
+            background-color: #a48a60;
+        }
+
+
+        /* 7. Аяқтау (Футер) */
+        .footer {
+            background: var(--color-dark);
+            color: var(--color-light);
+            padding: 40px 20px;
+            margin-top: 40px;
+            position: relative;
+            z-index: 2;
+        }
+        .footer h3 {
+            font-size: 2.5rem;
+            color: var(--color-gold);
+            margin: 0;
+        }
+        .footer p {
+            margin-top: 10px;
+            font-size: 1.5rem;
+        }
+        .footer-names {
+            font-family: var(--font-accent);
+            font-size: 2.5rem;
+        }
+
+        /* Анимация */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Адаптивтілік */
+        @media (max-width: 1000px) {
+            .side-ornament { display: none; } /* Шағын экрандарда оюларды жасыру */
+        }
+
+        @media (max-width: 768px) {
+            body { font-size: 16px; }
+            .hero h1 { font-size: 3.5rem; }
+            .hero h2 { font-size: 1.2rem; }
+            .section h3 { font-size: 2rem; }
+            .section p { font-size: 1.1rem; }
+            .details-grid { grid-template-columns: 1fr; }
+            #countdown { gap: 10px; }
+            #countdown div { padding: 15px; min-width: 60px; }
+            #countdown div span { font-size: 2.5rem; }
+            #countdown div p { font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="side-ornament side-ornament-left"></div>
+    <div class="side-ornament side-ornament-right"></div>
+
+    <header class="hero">
+        <h1>Adilzhan & Dinara</h1>
+        <h2>23.03.2026</h2>
+    </header>
+
+    <main>
+        <section class="section invitation animate-on-scroll">
+            <h3>Құрметті қонақтар!</h3>
+            <div class="ornament"></div>
+            <p>Біз, Уалиолла – Нұргүл, сіздерді ұлымыз Әділжан мен келініміз Динараның үйлену тойына арналған мерекелік дастарханның қадірлі қонағы болуға шақырамыз!</p>
+            <p>Осы айтулы сәтте біздің қуанышымызға ортақ болып, жас жұбайларға ақ батаңызды беруіңізді асыға күтеміз.</p>
+        </section>
+
+        <section class="section timer-section animate-on-scroll bg-white">
+            <h3>Басты сәтке дейін қалды:</h3>
+            <div id="countdown">
+                <div>
+                    <span id="days">0</span>
+                    <p>күн</p>
+                </div>
+                <div>
+                    <span id="hours">0</span>
+                    <p>сағат</p>
+                </div>
+                <div>
+                    <span id="minutes">0</span>
+                    <p>минут</p>
+                </div>
+                <div>
+                    <span id="seconds">0</span>
+                    <p>секунд</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section details animate-on-scroll">
+            <h3>Мереке туралы мәлімет</h3>
+            <div class="details-grid">
+                <div class="animate-on-scroll">
+                    <h4>Той күні мен уақыты</h4>
+                    <p><strong>Күні:</strong> 23 наурыз 2026</p>
+                    <p><strong>Қонақтардың жиналуы:</strong> 19:00</p>
+                    <div class="calendar">
+                        <div class="calendar-header">Наурыз 2026</div>
+                        <div class="calendar-grid">
+                            <span>Дс</span><span>Сс</span><span>Ср</span><span>Бс</span><span>Жм</span><span>Сб</span><span>Жс</span>
+                            <span></span><span></span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+                            <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span>
+                            <span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span>
+                            <span>20</span><span>21</span><span>22</span><span class="day highlight">23</span><span>24</span><span>25</span><span>26</span>
+                            <span>27</span><span>28</span><span>29</span><span>30</span><span>31</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="animate-on-scroll">
+                    <h4>Мекен-жай</h4>
+                    <p>Той "Sultan Saraiy" мейрамханасында өтеді.</p>
+                    <p><strong>Мекен-жайымыз:</strong> Орал қаласы, Брусиловский көшесі, 4</p>
+                    <a href="https://2gis.kz/uralsk/geo/70000001072745037/51.294124,51.169976" class="map-button" target="_blank">Картадан қарау</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section rsvp-form animate-on-scroll bg-white">
+            <h3>Тойға келетініңізді растаңыз</h3>
+            <p>Төмендегі форманы тойға дейін толтыруыңызды өтінеміз.</p>
+            
+            <form action="https://formsubmit.co/cr7859806@gmail.com" method="POST" id="rsvpForm">
+                
+                <input type="hidden" name="_subject" value="Тойға шақыру: Жаңа жауап!">
+                <input type="hidden" name="_template" value="table">
+                
+                <div class="form-grid">
+                    
+                    <div class="form-field full-width">
+                        <label for="name_1">Атыңыз (Имя)</label>
+                        <input type="text" id="name_1" name="Аты" class="form-input" required>
+                    </div>
+                    
+                    <div id="dynamicGuestFields" class="full-width" style="display: none;"></div> 
+
+                    <div class="form-field full-width">
+                        <label>Тойға келесіз бе? (Придете?)</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="Қатысу" value="Иә, келемін" required> Иә, келемін (Да)</label>
+                            <label><input type="radio" name="Қатысу" value="Өкінішке орай, келе алмаймын" required> Келе алмаймын (Нет)</label>
+                        </div>
+                    </div>
+
+                    <div class="form-field full-width">
+                        <button type="submit" class="submit-button" id="submitButton" disabled>Жіберу (Отправить)</button>
+                    </div>
+                </div>
+            </form>
+        </section>
+
+    </main>
+
+    <footer class="footer animate-on-scroll">
+        <h3>Тойда кездескенше!</h3>
+        <p style="font-size: 1.2rem; margin-top: 25px; opacity: 0.8;">Той иелері:</p>
+        <p class="footer-names" style="font-size: 2.5rem; margin-top: 5px;">Ualiolla & Nurgul</p>
+    </footer>
+
+    <script>
+        // Таймер (өзгермеген)
+        const weddingDate = new Date('2026-03-23T19:00:00');
+        function updateCountdown() {
+            const now = new Date();
+            const diff = weddingDate - now;
+            if (diff <= 0) {
+                document.getElementById('countdown').innerHTML = "<h3>Той басталды!</h3>";
+                return;
+            }
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            document.getElementById('days').innerText = days;
+            document.getElementById('hours').innerText = hours;
+            document.getElementById('minutes').innerText = minutes;
+            document.getElementById('seconds').innerText = seconds;
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+    <script>
+        // Анимация (өзгермеген)
+        const animatedElements = document.querySelectorAll('.animate-on-scroll');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        animatedElements.forEach(el => { observer.observe(el); });
+    </script>
+    
+    <script>
+        const rsvpForm = document.getElementById('rsvpForm');
+        const submitButton = document.getElementById('submitButton');
+        const nameField = document.getElementById('name_1');
+
+        function validateForm() {
+            let isValid = true;
+            
+            // 1. Аты (Имя) толтырылды ма?
+            if (!nameField || nameField.value.trim() === '') {
+                isValid = false;
+            }
+            
+            // 2. "Иә/Жоқ" (Радио) таңдалды ма?
+            const participation = document.querySelector('input[name="Қатысу"]:checked');
+            if (!participation) {
+                isValid = false;
+            }
+
+            // 3. Батырманы қосу/өшіру
+            submitButton.disabled = !isValid;
+        }
+
+        // Формадағы кез келген енгізуді тыңдау
+        rsvpForm.addEventListener('input', validateForm);
+        
+        // Бет жүктелгенде бір рет валидацияны іске қосу (батырма сұр болып тұруы үшін)
+        document.addEventListener('DOMContentLoaded', validateForm);
+
+    </script>
+
+</body>
+</html>
